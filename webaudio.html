@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+    .canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello world</h1>
+  <button id="start">start</button>
+  <button id="stop">stop</button>
+  <button id="1">1</button>
+  <button id="2">2</button>
+  <button id="3">3</button>
+  <button id="4">4</button>
+  <button id="5">5</button>
+  <button id="6">6</button>
+  <canvas class="canvas" style="width: 100%; height: 100%;" ></canvas>
+  <script>
+    var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    var oscillator = audioCtx.createOscillator();
+    var gainNode = audioCtx.createGain();
+
+    var WIDTH = window.innerWidth;
+    var HEIGHT = window.innerHeight;
+
+    var maxFreq = 600;
+    var maxVol = 1;
+
+    var initialFreq = 300;
+    var initialVol = 0.5;
+
+    // set options for the oscillator
+    oscillator.type = 'sine'; // sine wave — other values are 'square', 'sawtooth', 'triangle' and 'custom'
+    oscillator.frequency.value = initialFreq; // value in hertz
+    // oscillator.start();
+
+    gainNode.gain.value = initialVol;
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    // Mouse pointer coordinates
+    var CurX;
+    var CurY;
+
+    // Get new mouse pointer coordinates when mouse is moved
+    // then set new gain and pitch values
+
+    document.onmousemove = updatePage;
+
+    function updatePage(e) {
+        CurX = (window.Event) ? e.pageX : event.clientX + (document.documentElement.scrollLeft ? document.documentElement.scrollLeft : document.body.scrollLeft);
+        CurY = (window.Event) ? e.pageY : event.clientY + (document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop);
+
+        oscillator.frequency.value = (CurX/WIDTH) * maxFreq;
+        gainNode.gain.value = (CurY/HEIGHT) * maxVol;
+
+        canvasDraw();
+    }
+
+    function random(number1,number2) {
+      var randomNo = number1 + (Math.floor(Math.random() * (number2 - number1)) + 1);
+      return randomNo;
+    }
+
+    var canvas = document.querySelector('.canvas');
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+
+    var canvasCtx = canvas.getContext('2d');
+
+    function canvasDraw() {
+      rX = CurX;
+      rY = CurY;
+      rC = Math.floor((gainNode.gain.value/maxVol)*30);
+
+      canvasCtx.globalAlpha = 0.2;
+
+      for(i=1;i<=15;i=i+2) {
+        canvasCtx.beginPath();
+        canvasCtx.fillStyle = 'rgb(' + 100+(i*10) + ',' + Math.floor((gainNode.gain.value/maxVol)*255) + ',' + Math.floor((oscillator.frequency.value/maxFreq)*255) + ')';
+        canvasCtx.arc(rX+random(0,50),rY+random(0,50),rC/2+i,(Math.PI/180)*0,(Math.PI/180)*360,false);
+        canvasCtx.fill();
+        canvasCtx.closePath();
+      }
+    }
+
+    var toggle = function(action){
+      switch (action) {
+        case 'start':
+            console.log('start');
+            oscillator.start();
+          break;
+        case 'stop':
+            console.log('stop');
+            oscillator.stop();
+          break;
+        default:
+          var value = parseInt(action + '00');
+          oscillator.frequency.value = value;
+          console.log(typeof(value));
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function(){
+      var buttons = document.querySelectorAll('button');
+
+      for (i = 0; i < buttons.length; i++){
+        buttons[i].addEventListener('click', function(){
+          toggle(this.id);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
