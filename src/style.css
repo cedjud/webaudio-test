@@ -1,17 +1,118 @@
+/* GLOBAL STYLES */
 html,
 body {
   height: 100%;
   width: 100%;
+
+  margin: 0;
+  padding: 0;
 }
-.nav {
+
+body {
+  background-color: darkslateblue;
+  background: url('img/hero_energi_istock_7288802.jpg');
+  background-size: cover;
+
+  font-family: "Arial", sans-serif;
+}
+/* END GLOBAL STYLES */
+
+
+/* HEADER STYLES */
+.header {
+  width: 450px;
+  height: 150px;
+  background: linear-gradient(to bottom right, white 50%, transparent 51%);
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header .logo {
+  width: 200px;
+  height: auto;
+  margin: 25px 15px;
+}
+/* END - HEADER STYLES */
+
+
+/* CONTAINER STYLES */
+#container {
+  width: 80%;
+  /*height: 40%;*/
+  padding: 30px;
+  margin: 0 auto;
   position: relative;
-  z-index: 35;
 }
-.canvas {
-  z-index: 12;
+
+#title {
+  color: white;
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  padding: 25px 0px;
+  font-weight: 100;
 }
+
+
+
+.row {
+  display: flex;
+  flex: row nowrap;
+  justify-content: center;
+}
+
+.item button {
+  display: inline-block;
+  margin: 20px 30px;
+  padding: 0;
+  border: none;
+  background-color: white;
+  height: 7px;
+  width: 7px;
+  border-radius: 15px;
+  color: transparent;
+  overflow: hidden;
+  cursor: pointer;
+  outline: none;
+}
+
+button:hover {
+  transform: scale(1.2);
+  opacity: .8;
+}
+
+button:active {
+  transform: scale(0.9);
+}
+
+.btn {
+  border: none;
+  background: none;
+  color: white;
+  padding: 0px 29px;
+  outline: none;
+  cursor: pointer;
+}
+
+/* END - CONTAINER STYLES */
+
+/* UTILITIES */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* END - UTILITIES */
