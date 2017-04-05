@@ -6,9 +6,11 @@
   "author": "cedjud <cedricjud@outlook.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "lite-server"
+    "dev": "webpack --watch & lite-server"
   },
   "dependencies": {
-    "lite-server": "^2.3.0"
+    "howler": "^2.0.3",
+    "lite-server": "^2.3.0",
+    "webpack": "^2.3.3"
   }
 }
